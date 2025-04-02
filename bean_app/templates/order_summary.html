@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block main_block %}
+{% for o in orders %}
+<div class="mx-auto my-4 max-w-4xl md:my-6">
+    <div class="overflow-hidden rounded-xl border border-gray-100 shadow">
+      <div class="grid grid-cols-1 md:grid-cols-2">
+        <div class="px-5 py-6 md:border-r md:border-r-gray-200 md:px-8">
+          <div class="flow-root">
+            <ul class="-my-7 divide-y divide-gray-200">
+              {% for oi in o.orderitems.all %}
+              <li class="flex items-stretch justify-between space-x-5 py-7">
+                <div class="flex flex-1 items-stretch">
+                  <div class="flex-shrink-0">
+                  {% if oi.beanbag_variant_object.beanbag_object.picture %}
+                  <img
+                  class="h-20 w-20 rounded-lg border border-gray-200 object-contain"
+                  src="{{ oi.beanbag_variant_object.beanbag_object.picture.url }}"
+                  alt="{{ oi.beanbag_variant_object.beanbag_object.title }}"
+                />
+                  {% else %}
+                  <img
+                  class="h-20 w-20 rounded-lg border border-gray-200 object-contain"
+                  src="https://via.placeholder.com/150"
+                  alt="No Image Available"
+                />
+                  {% endif %}
+                  </div>
+                  <div class="ml-5 flex flex-col justify-between">
+                    <div class="flex-1">
+                      <p class="text-sm font-bold text-gray-900">
+                        {{ oi.beanbag_variant_object.beanbag_object.title }}
+                      </p>
+                      <p class="mt-1.5 text-sm font-medium text-gray-600">
+                        Size: {{ oi.beanbag_variant_object.size_object.size }}
+                      </p>
+                      <p class="mt-1.5 text-sm font-medium text-gray-600">
+                       Qty: {{ oi.quantity }}
+                       </p>
+                       <p class="mt-1.5 text-sm font-medium text-gray-600">
+                        Price: ₹{{ oi.price }}
+                        </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="ml-auto flex flex-col items-end justify-between">
+                  <p class="text-right text-sm font-bold text-gray-900">
+                    ₹{{ oi.item_total }}
+                  </p>
+                </div>
+              </li>
+              {% endfor %}
+            </ul>
+            <hr class="mt-6 border-gray-200" />
+            <ul class="mt-6 space-y-3">
+              <li class="flex items-center justify-between">
+                <p class="text-sm font-medium">Sub total</p>
+                <p class="text-sm font-medium">₹{{ o.order_total }}</p>
+              </li>
+              <li class="flex items-center justify-between">
+                <p class="text-sm font-medium">Pickup</p>
+                <p class="text-sm font-medium">₹0</p>
+              </li>
+              <li class="flex items-center justify-between">
+                <p class="text-sm font-medium">Total</p>
+                <p class="text-sm font-bold">₹{{ o.order_total }}</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="px-5 py-6 md:px-8">
+          <div class="flow-root">
+            <div class="-my-6 divide-y divide-gray-200">
+              <div class="py-6">
+                <h2 class="text-base font-bold text-black">
+                  Contact Information
+                </h2>
+                <p class="font-medium mt-3 text-xs text-gray-700">
+                  Order Number: #{{ o.id }}
+                </p>
+                <p class="text-xs font-medium text-gray-700">
+                  Date: {{ o.created_at|date:"d M Y, H:i" }}
+                </p>
+                {% if o.is_paid %}
+                <button
+                  type="button"
+                  class="mt-4 rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                >
+                  View Invoice
+                </button>
+                {% endif %}
+              </div>
+              <div class="py-6">
+                <h2 class="mb-2 text-base font-bold text-black">
+                  Shipping Information
+                </h2>
+                <p class="mt-3 text-xs font-medium text-gray-700">{{ o.address }}</p>
+                <p class="text-xs font-medium text-gray-700">{{ o.phone }}</p>
+              </div>
+              <div class="py-6">
+                <h2 class="text-base font-bold text-black">
+                  Payment Status
+                </h2>
+                <p class="mt-3 text-xs font-medium text-gray-700">
+                  {% if o.is_paid %}
+                    <span class="text-green-600">Completed</span>
+                  {% else %}
+                    <span class="text-yellow-600">Pending</span>
+                  {% endif %}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

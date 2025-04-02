@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block main_block %}
+
+{% if messages %}
+    <div class="max-w-3xl mx-auto text-center mb-4">
+        {% for message in messages %}
+            <p class="px-4 py-2 rounded-lg shadow-md text-white 
+                {% if message.tags == 'error' %} bg-red-500 {% elif message.tags == 'success' %} bg-green-500 {% endif %}">
+                {{ message }}
+            </p>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<div class="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-200 to-purple-300 py-10">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
+        <h2 class="text-3xl font-bold text-gray-800 text-center mb-6">✏️ Edit Your Review</h2>
+
+        <form method="post" class="space-y-4">
+            {% csrf_token %}
+
+            <div class="mb-4">
+                <label class="block text-lg font-medium text-gray-700">⭐ Rating</label>
+                {{ form.rating }}
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-lg font-medium text-gray-700">💬 Your Review</label>
+                {{ form.comment }}
+            </div>
+
+            <button type="submit" class="w-full bg-gradient-to-r from-green-400 to-green-600 text-white py-3 rounded-lg font-semibold shadow-md hover:scale-105 transition-transform">
+                ✅ Update Review
+            </button>
+        </form>
+
+        <div class="mt-6 text-center">
+            <a href="{% url 'product-detail' review.beanbag.id %}" class="text-blue-600 font-semibold hover:text-blue-800 transition duration-300">
+                ⬅ Back to Product
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+    <script>
+        // JavaScript to close the message box
+        function closeMessage() {
+            document.getElementById("message-box").style.display = "none";
+        }
+    </script>
+</head>
+
+
+{%load socialaccount%}
+
+<body class="bg-gray-100">
+
+    <div class="relative h-screen w-full">
+        <img src="https://static.vecteezy.com/system/resources/previews/021/620/042/non_2x/geometric-red-abstract-background-free-vector.jpg" alt="Background Image" class="absolute inset-0 w-full h-full object-cover filter ">
+       
+    <form action="" method="post">
+        {% csrf_token %}
+        <!-- Display messages (success or error) -->
+        {% if messages %}
+            <div id="message-box" class="w-full max-w-xs mx-auto">
+                {% for m in messages %}
+                    <div class="relative p-4 rounded-lg 
+                        {% if 'error' in m.tags %}
+                            bg-red-100 text-red-800 border-l-4 border-red-500
+                        {% elif 'success' in m.tags %}
+                            bg-green-100 text-green-800 border-l-4 border-green-500
+                        {% endif %}">
+                        <!-- Close button -->
+                        <button onclick="closeMessage()" class="absolute top-2 right-2 text-xl font-bold text-gray-500">
+                            &times;
+                        </button>
+                        {{ m }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+            <div class="relative py-3 sm:max-w-xl sm:mx-auto">
+                <div
+                    class="absolute inset-0 bg-gradient-to-r from-cyan-400 to-green-500 shadow-2xl transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl">
+                </div>
+                <div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+                    <div class="max-w-md mx-auto">
+                        <div>
+                            <h1 class="text-2xl font-semibold">Login</h1>
+                        </div>
+                        <div class="divide-y divide-gray-200">
+                            <div class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
+                                <!-- Form fields (inputs) go here -->
+                                {{ form }}
+
+                                <div class="relative">
+                                    <button type="submit" class="hover:bg-green-500 bg-cyan-500 text-white rounded-md px-4 py-2 w-full">
+                                        Submit
+                                    </button>
+                                </div>
+                                <div class="mt-4 flex flex-col items-center text-center">
+                                    <div class="flex items-center space-x-4">
+                                        <a href="{% provider_login_url 'google' %}" class="flex items-center space-x-2 text-red-500 hover:text-red-600 transform hover:scale-110 transition-all duration-300">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-google" viewBox="0 0 16 16">
+                                                <path d="M15.545 6.558a9.4 9.4 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.7 7.7 0 0 1 5.352 2.082l-2.284 2.284A4.35 4.35 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.8 4.8 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.7 3.7 0 0 0 1.599-2.431H8v-3.08z"/>
+                                            </svg>
+                                            <span>Sign in with Google</span>
+                                        </a>
+                                    </div>
+                                    <div class="mt-2">
+                                        <span class="text-sm text-gray-500">Create New Account?</span>
+                                        <a href="{% url 'signup' %}" class="text-blue-500 hover:text-blue-600 ml-1">Register</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    </div>
+</body>
+
+</html>

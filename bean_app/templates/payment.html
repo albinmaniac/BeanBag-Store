@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Payment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body class="bg-gradient-to-r from-indigo-500 to-blue-600 min-h-screen flex items-center justify-center">
+
+    <div class="bg-white p-8 rounded-lg shadow-2xl max-w-md text-center">
+        <!-- Payment Header -->
+        <h1 class="text-3xl font-bold text-gray-900">Complete Your Payment</h1>
+        <p class="text-gray-500 mt-2">Make a secure transaction with Razorpay.</p>
+
+        <!-- Payment Icon -->
+        <div class="my-6 flex justify-center">
+            <img src="https://cdn-icons-png.flaticon.com/512/888/888855.png" alt="Payment Icon"
+                class="w-20 h-20 animate-bounce">
+        </div>
+
+        <!-- Payment Details -->
+        <div class="bg-gray-100 p-4 rounded-lg shadow-sm">
+            <p class="text-lg font-semibold text-gray-800">Amount: ₹{{ amount|floatformat:2 }}</p>
+            <p class="text-gray-600 text-sm mt-1">Order ID: {{ order_id }}</p>
+        </div>
+
+        <!-- Pay Button -->
+        <button id="rzp-button1"
+            class="mt-6 px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-semibold text-lg rounded-lg shadow-lg transform hover:scale-105 transition-all">
+            💳 Pay Now
+        </button>
+
+        <p class="text-xs text-gray-400 mt-4">🔒 Secure payment powered by Razorpay</p>
+    </div>
+
+    <script>
+    var csrftoken = '{{ csrf_token }}'; 
+    var options = {
+        "key": "{{ key_id }}", 
+        "amount": "{{ amount }}", 
+        "currency": "INR",
+        "name": "Coffee Bean Stores",
+        "description": "Order Payment",
+        "image": "https://example.com/your_logo",
+        "order_id": "{{ order_id }}",
+        "callback_url": "{% url 'payment-verification' %}",
+        "prefill": { 
+            "name": "Albin Mathew",
+            "email": "gaurav.kumar@example.com",
+            "contact": "8139830761" 
+        },
+        "notes": {
+            "address": "Razorpay Corporate Office"
+        },
+        "theme": {
+            "color": "#22c55e"
+        },
+        "handler": function (response) {
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = 'http://127.0.0.1:8000/payment/verify/';
+            form.innerHTML = `
+                <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                <input type="hidden" name="razorpay_payment_id" value="${response.razorpay_payment_id}">
+                <input type="hidden" name="razorpay_order_id" value="${response.razorpay_order_id}">
+                <input type="hidden" name="razorpay_signature" value="${response.razorpay_signature}">
+            `;
+            document.body.appendChild(form);
+            form.submit();
+        }
+    };
+    var rzp1 = new Razorpay(options);
+    document.getElementById('rzp-button1').onclick = function(e) {
+        rzp1.open();
+        e.preventDefault();
+    }
+    </script>
+
+</body>
+</html>

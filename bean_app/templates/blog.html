@@ -1,0 +1,608 @@
+{% extends 'base.html' %}
+{% block main_block %}
+    <style>
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        a {
+            text-decoration: none;
+            color: #0066cc;
+        }
+        
+        img {
+            max-width: 100%;
+        }
+        
+        /* Header */
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #0066cc;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .blog-hero {
+            background-color: #0066cc;
+            color: white;
+            padding: 3rem 5%;
+            text-align: center;
+        }
+        
+        .blog-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .blog-hero p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Blog Container */
+        .blog-container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 5%;
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 2rem;
+        }
+        
+        /* Blog Posts */
+        .blog-posts {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .blog-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+        
+        .blog-card-img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .blog-card-content {
+            padding: 1.5rem;
+        }
+        
+        .blog-category {
+            display: inline-block;
+            background: #e6f2ff;
+            color: #0066cc;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            margin-bottom: 1rem;
+        }
+        
+        .blog-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .blog-card p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .blog-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .blog-date {
+            color: #777;
+        }
+        
+        .read-more {
+            font-weight: 600;
+            color: #0066cc;
+        }
+        
+        /* Sidebar */
+        .blog-sidebar {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+        
+        .sidebar-section {
+            margin-bottom: 2rem;
+        }
+        
+        .sidebar-section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .sidebar-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e6f2ff;
+        }
+        
+        .sidebar-categories li, .recent-posts li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .search-form {
+            display: flex;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 0.7rem 1rem;
+            border: 1px solid #ddd;
+            border-right: none;
+            border-radius: 4px 0 0 4px;
+            font-family: inherit;
+        }
+        
+        .search-button {
+            background: #0066cc;
+            color: white;
+            border: none;
+            padding: 0 1rem;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+        
+        /* Newsletter */
+        .newsletter {
+            background: #e6f2ff;
+            padding: 3rem 5%;
+            text-align: center;
+        }
+        
+        .newsletter-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .newsletter h2 {
+            margin-bottom: 1rem;
+        }
+        
+        .newsletter p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-input {
+            flex: 1;
+            padding: 0.7rem 1rem;
+            border: 1px solid #ddd;
+            border-right: none;
+            border-radius: 4px 0 0 4px;
+            font-family: inherit;
+        }
+        
+        .newsletter-button {
+            background: #0066cc;
+            color: white;
+            border: none;
+            padding: 0 1.5rem;
+            border-radius: 0 4px 4px 0;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            padding: 3rem 5% 2rem;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.5rem;
+            list-style: none;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            color: white;
+            background: rgba(255,255,255,0.1);
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 2rem auto 0;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            font-size: 0.9rem;
+            color: #999;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 900px) {
+            .blog-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .blog-sidebar {
+                order: -1;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -300px;
+                width: 300px;
+                height: 100vh;
+                background: white;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 2rem;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+                transition: right 0.3s;
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .nav-close {
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+                background: none;
+                border: none;
+                font-size: 1.5rem;
+                cursor: pointer;
+            }
+            
+            .blog-hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">YourStore</a>
+            <nav>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="nav-links">
+                    <button class="nav-close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <a href="index.html">Home</a>
+                    <a href="shop.html">Shop</a>
+                    <a href="blog.html" class="active">Blog</a>
+                    <a href="about.html">About</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Blog Hero Section -->
+    <section class="blog-hero">
+        <h1>Our Blog</h1>
+        <p>Stay updated with the latest trends, tips, and insights from our team of experts.</p>
+    </section>
+
+    <!-- Blog Content -->
+    <div class="blog-container">
+        <main class="blog-posts">
+            <!-- Blog Post 1 -->
+            <article class="blog-card">
+                <img src="/api/placeholder/400/320" alt="Blog post featured image" class="blog-card-img">
+                <div class="blog-card-content">
+                    <span class="blog-category">Tips & Tricks</span>
+                    <h2>How to Choose the Perfect Product for Your Needs</h2>
+                    <p>We share our expert advice on selecting the right products based on your specific requirements and preferences.</p>
+                    <div class="blog-card-footer">
+                        <span class="blog-date">March 1, 2025</span>
+                        <a href="blog-post.html" class="read-more">Read More</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Blog Post 2 -->
+            <article class="blog-card">
+                <img src="/api/placeholder/400/320" alt="Blog post featured image" class="blog-card-img">
+                <div class="blog-card-content">
+                    <span class="blog-category">Industry News</span>
+                    <h2>Latest Trends in Our Industry for 2025</h2>
+                    <p>Discover the emerging trends that are shaping our industry this year and how they might affect your purchasing decisions.</p>
+                    <div class="blog-card-footer">
+                        <span class="blog-date">February 22, 2025</span>
+                        <a href="blog-post.html" class="read-more">Read More</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Blog Post 3 -->
+            <article class="blog-card">
+                <img src="/api/placeholder/400/320" alt="Blog post featured image" class="blog-card-img">
+                <div class="blog-card-content">
+                    <span class="blog-category">How-To Guide</span>
+                    <h2>5 Ways to Get the Most Out of Your Purchase</h2>
+                    <p>Learn how to maximize the value of your products with these simple but effective tips from our product specialists.</p>
+                    <div class="blog-card-footer">
+                        <span class="blog-date">February 15, 2025</span>
+                        <a href="blog-post.html" class="read-more">Read More</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Blog Post 4 -->
+            <article class="blog-card">
+                <img src="/api/placeholder/400/320" alt="Blog post featured image" class="blog-card-img">
+                <div class="blog-card-content">
+                    <span class="blog-category">Customer Stories</span>
+                    <h2>How Our Products Helped Transform Jane's Business</h2>
+                    <p>Read Jane's inspiring story about how our products helped her overcome challenges and grow her business.</p>
+                    <div class="blog-card-footer">
+                        <span class="blog-date">February 8, 2025</span>
+                        <a href="blog-post.html" class="read-more">Read More</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Add more blog posts as needed -->
+        </main>
+
+        <!-- Sidebar -->
+        <aside class="blog-sidebar">
+            <!-- Search -->
+            <div class="sidebar-section">
+                <h3>Search</h3>
+                <form class="search-form">
+                    <input type="text" placeholder="Search blog..." class="search-input">
+                    <button type="submit" class="search-button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
+            
+            <!-- Categories -->
+            <div class="sidebar-section">
+                <h3>Categories</h3>
+                <ul class="sidebar-categories">
+                    <li><a href="#">Tips & Tricks (8)</a></li>
+                    <li><a href="#">Industry News (5)</a></li>
+                    <li><a href="#">How-To Guides (12)</a></li>
+                    <li><a href="#">Customer Stories (6)</a></li>
+                    <li><a href="#">Product Reviews (9)</a></li>
+                </ul>
+            </div>
+            
+            <!-- Recent Posts -->
+            <div class="sidebar-section">
+                <h3>Recent Posts</h3>
+                <ul class="recent-posts">
+                    <li><a href="#">How to Choose the Perfect Product for Your Needs</a></li>
+                    <li><a href="#">Latest Trends in Our Industry for 2025</a></li>
+                    <li><a href="#">5 Ways to Get the Most Out of Your Purchase</a></li>
+                    <li><a href="#">How Our Products Helped Transform Jane's Business</a></li>
+                </ul>
+            </div>
+            
+            <!-- Tags -->
+            <div class="sidebar-section">
+                <h3>Popular Tags</h3>
+                <div class="tags">
+                    <a href="#" style="display:inline-block; margin:0.2rem; padding:0.3rem 0.6rem; background:#f1f1f1; border-radius:3px; font-size:0.8rem; color:#333;">products</a>
+                    <a href="#" style="display:inline-block; margin:0.2rem; padding:0.3rem 0.6rem; background:#f1f1f1; border-radius:3px; font-size:0.8rem; color:#333;">tips</a>
+                    <a href="#" style="display:inline-block; margin:0.2rem; padding:0.3rem 0.6rem; background:#f1f1f1; border-radius:3px; font-size:0.8rem; color:#333;">trends</a>
+                    <a href="#" style="display:inline-block; margin:0.2rem; padding:0.3rem 0.6rem; background:#f1f1f1; border-radius:3px; font-size:0.8rem; color:#333;">guides</a>
+                    <a href="#" style="display:inline-block; margin:0.2rem; padding:0.3rem 0.6rem; background:#f1f1f1; border-radius:3px; font-size:0.8rem; color:#333;">industry</a>
+                    <a href="#" style="display:inline-block; margin:0.2rem; padding:0.3rem 0.6rem; background:#f1f1f1; border-radius:3px; font-size:0.8rem; color:#333;">reviews</a>
+                    <a href="#" style="display:inline-block; margin:0.2rem; padding:0.3rem 0.6rem; background:#f1f1f1; border-radius:3px; font-size:0.8rem; color:#333;">how-to</a>
+                    <a href="#" style="display:inline-block; margin:0.2rem; padding:0.3rem 0.6rem; background:#f1f1f1; border-radius:3px; font-size:0.8rem; color:#333;">stories</a>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="newsletter-container">
+            <h2>Subscribe to Our Newsletter</h2>
+            <p>Get the latest articles, product updates, and exclusive offers directly to your inbox.</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Your email address" class="newsletter-input" required>
+                <button type="submit" class="newsletter-button">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>YourStore</h3>
+                <p>Providing quality products and valuable insights since 2020.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Shop</h3>
+                <ul class="footer-links">
+                    <li><a href="#">All Products</a></li>
+                    <li><a href="#">New Arrivals</a></li>
+                    <li><a href="#">Best Sellers</a></li>
+                    <li><a href="#">Special Offers</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Customer Service</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Shipping & Returns</a></li>
+                    <li><a href="#">Track Your Order</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Information</h3>
+                <ul class="footer-links">
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 YourStore. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        const navClose = document.querySelector('.nav-close');
+        
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinks.classList.add('active');
+            });
+        }
+        
+        if (navClose) {
+            navClose.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        }
+    </script>
+</body>
+{%endblock%}

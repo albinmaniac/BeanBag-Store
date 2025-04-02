@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block main_block %}
+
+{% if messages %}
+    <div class="max-w-3xl mx-auto text-center mb-4">
+        {% for message in messages %}
+            <p class="px-4 py-2 rounded-lg shadow-md text-white 
+                {% if message.tags == 'error' %} bg-red-500 {% elif message.tags == 'success' %} bg-green-500 {% endif %}">
+                {{ message }}
+            </p>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<div class="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-100 to-purple-200">
+    <div class="bg-white/70 backdrop-blur-md shadow-xl rounded-lg p-8 w-full max-w-lg transition-all transform hover:scale-105">
+        <!-- Title -->
+        <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">
+            ✍️ Write a Review for <span class="text-primary-500">{{ beanbag.title }}</span>
+        </h2>
+
+        <!-- Review Form -->
+        <form method="post" class="space-y-4">
+            {% csrf_token %}
+
+            <!-- Rating Dropdown -->
+            <div class="flex flex-col">
+                <label for="id_rating" class="text-lg font-semibold text-gray-700">⭐ Rating</label>
+                <select name="rating" id="id_rating" required 
+                    class="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition transform hover:scale-105">
+                    {% for value, label in form.fields.rating.choices %}
+                        <option value="{{ value }}">{{ label }}⭐</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Comment Box -->
+            <div class="flex flex-col">
+                <label for="id_comment" class="text-lg font-semibold text-gray-700">📝 Your Review</label>
+                <textarea name="comment" id="id_comment" rows="3" placeholder="Write your review..."
+                    class="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition transform hover:scale-105"></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" 
+                class="w-full bg-gradient-to-r from-green-400 to-green-600 text-white font-bold px-6 py-3 rounded-lg shadow-md hover:scale-110 transition-transform hover:shadow-lg">
+                🚀 Submit Review
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

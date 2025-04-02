@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f5f0ff',
+                            100: '#ede0ff',
+                            200: '#dbc1ff',
+                            300: '#c292ff',
+                            400: '#a459ff',
+                            500: '#8a31ff',
+                            600: '#7a15ff',
+                            700: '#6b0def',
+                            800: '#5a0bbe',
+                            900: '#4b0c9b',
+                        },
+                        secondary: {
+                            50: '#edfcf6',
+                            100: '#d4f7e9',
+                            200: '#aaedd5',
+                            300: '#72debb',
+                            400: '#3cc89c',
+                            500: '#1aad81',
+                            600: '#0f8969',
+                            700: '#0c6e55',
+                            800: '#0c5745',
+                            900: '#0b473a',
+                        },
+                        accent: {
+                            50: '#fff8ed',
+                            100: '#ffefd0',
+                            200: '#ffd999',
+                            300: '#ffbe57',
+                            400: '#ffa523',
+                            500: '#ff870d',
+                            600: '#ed6c00',
+                            700: '#c45102',
+                            800: '#9c4009',
+                            900: '#7e350d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Comfy Bean - Premium comfortable bean bags for your space">
+    <meta name="keywords" content="bean bags, comfort, premium, furniture, home decor">
+    <meta name="author" content="Comfy Bean">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"/>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script src="//code.tidio.co/7fpmfjdt9jrfvnsbajvoyi2wcajctgpg.js" async></script>
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .font-heading {
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        /* .dark {
+            @apply bg-gray-900 text-white;
+        } */
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            min-width: 160px;
+            z-index: 50;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: currentColor;
+            transition: width 0.3s;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .logo-pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+    
+    <title>Comfy Bean - Premium Bean Bags</title>
+</head>
+<body class="bg-gradient-to-br from-purple-50 to-white dark:from-gray-900 dark:to-gray-800 min-h-screen">
+
+    <!-- Navbar -->
+    <header class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="logo-pulse">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-primary-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" class="text-primary-400"></path>
+                            <circle cx="12" cy="12" r="4" class="text-secondary-400"></circle>
+                        </svg>
+                    </div>
+                    <a href="{% url 'index' %}" class="flex flex-col">
+                        <span class="text-2xl font-bold bg-gradient-to-r from-primary-500 to-secondary-500 text-transparent bg-clip-text font-heading">Comfy Bean</span>
+                        <span class="text-xs text-gray-500 dark:text-gray-400">Premium Comfort Solutions</span>
+                    </a>
+                </div>
+                
+                <!-- Search Bar -->
+                <div class="hidden md:block flex-1 max-w-md mx-6">
+                    <form method="GET" action="{% url 'category' 'ALL' %}" class="relative">
+                        <input 
+                            type="text" 
+                            name="search" 
+                            placeholder="Search for bean bags..." 
+                            value="{{ request.GET.search }}" 
+                            class="w-full border border-gray-300 dark:border-gray-600 rounded-full px-5 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:text-white transition-all"
+                        >
+                        <button 
+                            type="submit" 
+                            class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary-500 text-white p-2 rounded-full hover:bg-primary-600 transition-all"
+                        >
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Navigation & Actions -->
+                <div class="flex items-center space-x-1 md:space-x-4">
+                    <!-- Desktop Navigation -->
+                    <nav aria-label="Global" class="hidden lg:flex items-center space-x-6">
+                        <a class="text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 font-medium text-sm transition-all nav-link" href="#">Home</a>
+                        
+                        <div class="dropdown relative">
+                          <a class="text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 font-medium text-sm transition-all nav-link flex items-center" href="#">
+                            Categories <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                          </a>
+                          <div class="dropdown-content mt-2 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-2 border border-gray-100 dark:border-gray-700">
+                            <a href="{% url 'category' 'CLASSIC' %}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-gray-700 rounded-md">CLASSIC</a>
+                            <a href="{% url 'category' 'SOCCER' %}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-gray-700 rounded-md">SOCCER </a>
+                            <a href="{% url 'category' 'CHAIRS' %}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-gray-700 rounded-md">CHAIRS </a>
+                            <a href="{% url 'category' 'LUXURY' %}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-gray-700 rounded-md">LUXURY </a>
+                          </div>
+                        </div>
+                        
+                        <a class="text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 font-medium text-sm transition-all nav-link" href="{% url 'contact' %}">Services</a>
+                        <a class="text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 font-medium text-sm transition-all nav-link" href="{% url 'order-summary' %}">Orders</a>
+                        <a href="{% url 'wishlist' %}" class="relative p-2 text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors">
+                            <i class="fas fa-heart text-xl"></i>
+                            {% if wishlist_count > 0 %}
+                            <span class="absolute -top-2 -right-2 bg-red-500 dark:bg-accent-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                                {{ wishlist_count }}
+                            </span>
+                            {% endif %}
+                        </a>
+                    </nav>
+                    
+                    <!-- User Actions -->
+                    <div class="flex items-center space-x-2 md:space-x-4">
+                        <!-- Cart with Badge -->
+                        <a href="{% url 'cart-summary' %}" class="relative p-2 text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors">
+                            <i class="fas fa-shopping-bag text-xl"></i>
+                            {% if cart_item_count > 0 %}
+                            <span class="absolute -top-2 -right-2 bg-red-500 dark:bg-accent-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                                {{ cart_item_count }}
+                            </span>
+                            {% endif %}
+                        </a>
+                        
+                        <!-- Account -->
+                        {% if request.user.is_authenticated %}
+                        <div class="dropdown relative">
+                            <button class="flex items-center space-x-1 text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors p-2">
+                                <i class="fas fa-user-circle text-xl"></i>
+                                <span class="hidden md:inline text-sm font-medium">{{ request.user.get_full_name|default:request.user.username }}</span>
+                                <i class="fas fa-chevron-down text-xs"></i>
+                            </button>
+                            <div class="dropdown-content right-0 mt-2 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-2 border border-gray-100 dark:border-gray-700 w-48">
+                                <div class="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
+                                    <p class="text-sm font-medium text-gray-900 dark:text-white">
+                                        Hello, {{ request.user.get_full_name|default:request.user.username }}
+                                    </p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 truncate">
+                                        {{ request.user.email }}
+                                    </p>
+                                </div>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-gray-700 rounded-md">
+                                    <i class="fas fa-user-cog mr-2"></i> Profile
+                                </a>
+                                <a href="{% url 'order-summary' %}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-gray-700 rounded-md">
+                                    <i class="fas fa-shopping-basket mr-2"></i> My Orders
+                                </a>
+                                <a href="{%url 'wishlist'%}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-gray-700 rounded-md">
+                                    <i class="fas fa-heart mr-2"></i> Wishlist
+                                </a>
+                                <div class="border-t border-gray-200 dark:border-gray-700 mt-2 pt-2">
+                                    <a href="{% url 'logout' %}" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-gray-700 rounded-md">
+                                        <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {% else %}
+                        <a href="{% url 'signin' %}" class="hidden md:flex items-center space-x-1 bg-primary-500 hover:bg-primary-600 text-white font-medium py-2 px-4 rounded-full transition-colors">
+                            <i class="fas fa-sign-in-alt"></i>
+                            <span>Login</span>
+                        </a>
+                        <a href="{% url 'signin' %}" class="md:hidden text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors p-2">
+                            <i class="fas fa-sign-in-alt text-xl"></i>
+                        </a>
+                        {% endif %}
+                        
+                        <!-- Theme Toggle -->
+                        <button id="theme-toggle" class="p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-primary-100 dark:hover:bg-gray-600 transition-colors">
+                            <i class="fas fa-moon dark:hidden"></i>
+                            <i class="fas fa-sun hidden dark:block"></i>
+                        </button>
+                        
+                        <!-- Mobile Menu Button -->
+                        <button id="mobile-menu-button" class="lg:hidden p-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mobile Search Bar -->
+            <div class="lg:hidden pb-4">
+                <form method="GET" action="{% url 'category' 'ALL' %}" class="relative">
+                    <input 
+                        type="text" 
+                        name="search" 
+                        placeholder="Search for bean bags..." 
+                        value="{{ request.GET.search }}" 
+                        class="w-full border border-gray-300 dark:border-gray-600 rounded-full px-5 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:text-white transition-all"
+                    >
+                    <button 
+                        type="submit" 
+                        class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary-500 text-white p-2 rounded-full hover:bg-primary-600 transition-all"
+                    >
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white dark:bg-gray-800 shadow-inner border-t border-gray-200 dark:border-gray-700">
+            <div class="px-4 py-3 space-y-1">
+                <a href="{%url 'index'%}" class="block py-2 px-3 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-gray-700 rounded-md">Home</a>
+                <a href="{% url 'contact' %}" class="block py-2 px-3 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-gray-700 rounded-md">Services</a>
+                <a href="{% url 'order-summary' %}" class="block py-2 px-3 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-gray-700 rounded-md">Orders</a>
+                <a href="#" class="block py-2 px-3 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-gray-700 rounded-md">Blog</a>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Page Content -->
+    <main>
+        {% block main_block %}
+        {% endblock %}
+        
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-12 pb-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Column 1: About -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4 text-primary-400">About Comfy Bean</h3>
+                    <p class="text-gray-400 text-sm mb-4">We create premium bean bags designed for ultimate comfort and style. Handcrafted with care using premium materials for your relaxation.</p>
+                    <div class="flex space-x-4 mt-4">
+                        <a href="#" class="text-gray-400 hover:text-primary-400 transition-colors"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-primary-400 transition-colors"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-primary-400 transition-colors"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-primary-400 transition-colors"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Column 2: Quick Links -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4 text-primary-400">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="{%url 'index'%}" class="text-gray-400 hover:text-white transition-colors text-sm">Home</a></li>
+                        <li><a href="{%url 'category' 'ALL' %}" class="text-gray-400 hover:text-white transition-colors text-sm">Shop All</a></li>
+                        <li><a href="{%url 'category' 'ALL' %}" class="text-gray-400 hover:text-white transition-colors text-sm">New Arrivals</a></li>
+                        <li><a href="{%url 'category' 'LUXURY' %}" class="text-gray-400 hover:text-white transition-colors text-sm">LUXURY Bags</a></li>
+                        <li><a href="{%url 'category' 'ALL' %}" class="text-gray-400 hover:text-white transition-colors text-sm">Sale</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 3: Customer Service -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4 text-primary-400">Customer Service</h3>
+                    <ul class="space-y-2">
+                        <li><a href="{%url 'contact'%}" class="text-gray-400 hover:text-white transition-colors text-sm">Contact Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">FAQs</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Shipping & Returns</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 4: Newsletter -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4 text-primary-400">Join Our Newsletter</h3>
+                    <p class="text-gray-400 text-sm mb-4">Subscribe to get special offers, free giveaways, and new product announcements.</p>
+                    <form class="mt-4">
+                        <div class="flex">
+                            <input type="email" placeholder="Your email" class="px-4 py-2 w-full rounded-l-md focus:outline-none focus:ring-2 focus:ring-primary-500">
+                            <button type="submit" class="bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-r-md transition-colors">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-10 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm">&copy; 2025 Comfy Bean. All rights reserved.</p>
+                    <div class="mt-4 md:mt-0">
+                        <a href="{%url 'index'%}">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-primary-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" class="text-primary-400"></path>
+                          <circle cx="12" cy="12" r="4" class="text-secondary-400"></circle>
+                      </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Scripts -->
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        document.getElementById("mobile-menu-button").addEventListener("click", function () {
+        document.getElementById("mobile-menu").classList.toggle("hidden");
+            });
+        
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+        
+        // Check for saved theme preference or prefer-color-scheme
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+            html.classList.add('dark');
+        }
+        
+        // Theme toggle button click handler
+        if (themeToggle) {
+            themeToggle.addEventListener('click', () => {
+                html.classList.toggle('dark');
+                localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+            });
+        }
+    </script>
+
+    <script>
+        const roomName = "general";  
+        const socket = new WebSocket(`ws://${window.location.host}/ws/chat/${roomName}/`);
+    
+        socket.onopen = function () {
+            console.log("WebSocket Connected");
+        };
+    
+        socket.onmessage = function (event) {
+            const data = JSON.parse(event.data);
+            console.log(`${data.username}: ${data.message}`);
+    
+            // Append message to chat box
+            const chatBox = document.getElementById("chat-box");
+            if (chatBox) {
+                const messageElement = document.createElement("p");
+                messageElement.classList.add("text-gray-800", "dark:text-white", "mb-2");
+                messageElement.textContent = `${data.username}: ${data.message}`;
+                chatBox.appendChild(messageElement);
+            }
+        };
+    
+        function sendMessage(username, message) {
+            if (message.trim() !== "") {
+                socket.send(JSON.stringify({ username, message }));
+                document.getElementById("messageInput").value = ''; // Clear input
+            }
+        }
+    </script>
+
+    
+
+    <!--Start of Tawk.to Script-->
+    <!-- <script type="text/javascript">
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        (function(){
+        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+        s1.async=true;
+        s1.src='https://embed.tawk.to/67b054f2214f8a190a4efa8d/1ik4cnlgf';
+        s1.charset='UTF-8';
+        s1.setAttribute('crossorigin','*');
+        s0.parentNode.insertBefore(s1,s0);
+        })();
+    </script> -->
+        <!--End of Tawk.to Script-->
+</body>
+</html>

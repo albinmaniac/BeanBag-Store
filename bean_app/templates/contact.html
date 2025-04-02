@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block main_block %}
+<section class="bg-gray-100 dark:bg-gray-900 py-12">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <!-- Section Header -->
+        <div class="text-center">
+            <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white" id="contactUs">Visit Our Location</h2>
+            <p class="mt-3 text-lg text-gray-600 dark:text-gray-400">Let us serve you the best</p>
+            <!-- Display Django Messages -->
+            {% if messages %}
+                <div class="mt-4">
+                    {% for message in messages %}
+                        <p class="text-green-600 font-semibold">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Contact & Map Grid -->
+        <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-10">
+            
+            <!-- Contact Details -->
+            <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6">
+                <div class="mb-6">
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white">Contact</h3>
+                    <p class="mt-1 font-bold text-gray-600 dark:text-gray-300">
+                        <a href="tel:+123">Phone: +91 1234567899</a>
+                    </p>
+                    
+                    <!-- Call Button -->
+                    <a href="tel:+911234567899" class="mt-3 inline-flex items-center gap-2 px-4 py-2 text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow-md transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+                        </svg>
+                        Call Now
+                    </a>
+                </div>
+
+                <div class="mb-6">
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-white">Our Address</h3>
+                    <p class="mt-1 text-gray-600 dark:text-gray-300">Comfy Bean bags PVT Limited 
+                        16B, Palarivattom, Kaloor,Ernakulam, Kerala 682025
+                        </p>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-white">Hours</h3>
+                    <p class="mt-1 text-gray-600 dark:text-gray-300">Monday - Saturday : 9am - 7pm</p>
+                </div>
+            </div>
+
+            <!-- Map -->
+            <div class="rounded-lg overflow-hidden shadow-lg">
+                <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3929.189310259523!2d76.29906957541948!3d10.001215990104239!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b080d154868a60d%3A0x723bc37d649b5edb!2sCaprius%20Bean%20Bag!5e0!3m2!1sen!2sin!4v1740853171384!5m2!1sen!2sin"
+                    class="w-full h-80 md:h-96" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <div>
+        <form method="post" action="{% url 'contact' %}" class="bg-white p-6 rounded-lg shadow-lg">
+            {% csrf_token %}
+            
+            <label class="block text-gray-700 font-bold">Name:</label>
+            <input type="text" name="name" required class="w-full p-2 border rounded-lg mb-4">
+            
+            <label class="block text-gray-700 font-bold">Email:</label>
+            <input type="email" name="email" required class="w-full p-2 border rounded-lg mb-4">
+            
+            <label class="block text-gray-700 font-bold">Message:</label>
+            <textarea name="message" rows="4" required class="w-full p-2 border rounded-lg mb-4"></textarea>
+        
+            <button type="submit" class="w-full bg-indigo-600 text-white p-2 rounded-lg hover:bg-indigo-700">
+                Send Message
+            </button>
+        </form>
+        
+    </div>
+</section>
+{% endblock %}

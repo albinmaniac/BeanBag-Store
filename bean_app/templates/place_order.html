@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% block main_block %}
+<!-- Breadcrumb Start -->
+<div class="p-2">
+  <nav aria-label="Breadcrumb">
+      <ol class="flex items-center gap-1 text-sm text-gray-600">
+        <!-- Home link -->
+        <li>
+          <a href="/" class="block transition hover:text-gray-700">
+            <span class="sr-only"> Home </span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            </svg>
+          </a>
+        </li>
+        <!-- Cart link -->
+        <li class="rtl:rotate-180">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m9 20.247 6-16.5" />
+          </svg>
+        </li>
+        <li>
+          <a href="{% url 'cart-summary' %}" class="block transition hover:text-gray-700"> Cart </a>
+        </li>
+        <!-- Cart Summary -->
+        <li class="rtl:rotate-180">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m9 20.247 6-16.5" />
+          </svg>
+        </li>
+        <li>
+          <a href="#" class="block transition hover:text-gray-700"> Place Order </a>
+        </li>
+      </ol>
+  </nav>
+</div>
+<!-- Breadcrumb End -->
+
+
+<!-- Form Section -->
+<section class="bg-white py-8 md:py-16" style="background-color: cadetblue;">
+  <form action="{% url 'place-order' %}" method="post" class="mx-auto max-w-screen-xl px-4 2xl:px-0">
+    {% csrf_token %}
+    <div class="mt-6 sm:mt-8 lg:flex lg:items-start lg:gap-12 xl:gap-16" >
+      <!-- Delivery Details Section -->
+      <div class="min-w-0 flex-1 space-y-8">
+        <h2 class="text-xl font-semibold text-gray-900">Delivery Details</h2>
+        <div class="space-y-4 border px-4 py-4 sm:px-6 shadow rounded" style="background-color: bisque;">
+          <div>
+            <label for="address" class="mb-2 block text-sm font-medium text-gray-900"> Address <span class="text-red-500">*</span> </label>
+            {{ form.address }}
+          </div>
+          <div>
+            <label for="phone-input" class="mb-2 block text-sm font-medium text-gray-900"> Phone Number <span class="text-red-500">*</span> </label>
+            {{ form.phone }}
+          </div>
+        </div>
+
+        <!-- Order Summary Section -->
+        <h2 class="text-xl font-semibold text-gray-900">Order Summary</h2>
+        <div class="space-y-3 border bg-white px-2 py-4 sm:px-6 shadow rounded" style="background-color: bisque;">
+          {% for i in cartitems %}
+            <div class="flex flex-col rounded-lg bg-white sm:flex-row">
+              <img class="m-2 h-24 w-28 border object-cover object-center" src="{{ i.beanbag_variant_object.beanbag_object.picture.url }}" alt="{{ i.beanbag_variant_object.beanbag_object.title }}" />
+              <div class="flex w-full flex-col px-4 py-4">
+                <span class="font-semibold">{{ i.beanbag_variant_object.beanbag_object.title }}</span>
+                <span class="text-gray-400">Qty: {{ i.quantity }}</span>
+                <p class="text-lg font-bold">₹{{ i.beanbag_variant_object.price }}</p>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Payment and Place Order Section -->
+      <div class="mt-6 w-full space-y-6 sm:mt-8 lg:mt-0 lg:max-w-xs xl:max-w-md">
+        <h3 class="text-xl font-semibold text-gray-900">Payment</h3>
+        <div class="space-y-4">
+          <div class="rounded-lg border border-gray-200 bg-gray-50 p-4">
+            <div class="flex items-start">
+              <div class="flex h-5 items-center">
+                <input id="cod" type="radio" name="payment_method" value="COD" class="h-4 w-4 border-gray-300 bg-white text-primary-600" {% if form.payment_method.value == 'cod' %}checked{% endif %} />
+              </div>
+              <div class="ml-4 text-sm">
+                <label for="cod" class="font-medium text-gray-900"> Cash on Delivery (COD) </label>
+              </div>
+            </div>
+          </div>
+          
+
+          <div class="rounded-lg border border-gray-200 bg-gray-50 p-4">
+            <div class="flex items-start">
+              <div class="flex h-5 items-center">
+                <input id="online-payment" type="radio" name="payment_method" value="ONLINE" class="h-4 w-4 border-gray-300 bg-white text-primary-600" {% if form.payment_method.value == 'online' %}checked{% endif %} />
+              </div>
+              <div class="ml-4 text-sm">
+                <label for="online-payment" class="font-medium text-gray-900"> Online Payment </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="-my-3 divide-y divide-gray-200 light:divide-gray-800">
+          <dl class="flex items-center justify-between gap-4 py-3">
+            <dt class="text-base font-normal text-gray-500 light:text-gray-400">Subtotal</dt>
+            <dd class="text-base font-medium text-gray-900 light:text-white">₹{{total}}</dd>
+          </dl>
+
+          <dl class="flex items-center justify-between gap-4 py-3">
+            <dt class="text-base font-normal text-gray-500 light:text-gray-400">Savings</dt>
+            <dd class="text-base font-medium text-green-500">0</dd>
+          </dl>
+
+          <dl class="flex items-center justify-between gap-4 py-3">
+            <dt class="text-base font-normal text-gray-500 light:text-gray-400">Store Pickup</dt>
+            <dd class="text-base font-medium text-gray-900 light:text-white">₹0</dd>
+          </dl>
+
+          <dl class="flex items-center justify-between gap-4 py-3">
+            <dt class="text-base font-normal text-gray-500 light:text-gray-400">Tax</dt>
+            <dd class="text-base font-medium text-gray-900 light:text-white">₹0</dd>
+          </dl>
+
+          <dl class="flex items-center justify-between gap-4 py-3">
+            <dt class="text-base font-bold text-gray-900 light:text-white">Total</dt>
+            <dd class="text-base font-bold text-gray-900 light:text-white">₹{{total}}</dd>
+          </dl>
+        </div>
+
+        <!-- Place Order Button -->
+        <button type="submit"  class="w-full rounded-lg bg-blue-600 px-5 py-2.5 text-white font-medium hover:bg-blue-700">Place Order</button>
+      </div>
+    </div>
+  </form>
+</section>
+{% endblock %}

@@ -1,0 +1,350 @@
+{%extends 'base.html'%}
+{%block main_block%}
+    <script>
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', document.documentElement.classList.contains('dark'));
+        }
+        
+        // Check for saved dark mode preference
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.documentElement.classList.add('dark');
+        }
+        
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            200: '#99f6e4',
+                            300: '#5eead4',
+                            400: '#2dd4bf',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                            800: '#115e59',
+                            900: '#134e4a'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .swiper-button-next, .swiper-button-prev {
+            color: #4A5568; /* Adjust arrow color */
+        }
+    </style>
+
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-200 font-sans">
+    <!-- Hero Section with Subtle Background -->
+    <section class="relative overflow-hidden bg-gradient-to-r from-primary-50 to-white dark:from-gray-800 dark:to-gray-900">
+        <div class="absolute inset-0 z-0 opacity-20">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 560" class="w-full h-full">
+                <path fill="#14b8a6" fill-opacity="0.3" d="M0,192L48,176C96,160,192,128,288,144C384,160,480,224,576,234.7C672,245,768,203,864,170.7C960,139,1056,117,1152,128C1248,139,1344,181,1392,202.7L1440,224L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+            </svg>
+        </div>
+        
+        <!-- <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 relative z-10">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-bold text-primary-800 dark:text-white mb-4">
+                    <span class="inline-block transform transition-transform hover:scale-105 duration-300">Comfort Redefined</span>
+                </h1>
+                <p class="text-lg text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
+                    Premium bean bags crafted for ultimate relaxation and modern living spaces.
+                </p>
+            </div>
+        </div> -->
+    </section>
+
+    <!-- Featured Categories Section -->
+    <section class="py-16 bg-white dark:bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-2xl md:text-3xl font-bold text-primary-800 dark:text-white mb-8 text-center">
+                Categories
+            </h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="group relative overflow-hidden rounded-lg shadow-md transition-all duration-300 hover:shadow-xl bg-white dark:bg-gray-700">
+                    <a href="{%url 'category' 'CLASSIC' %}" class="block h-full">
+                        <div class="aspect-w-1 aspect-h-1">
+                            <img src="https://www.coolbeanbags.in/wp-content/uploads/2024/11/classic-bean-bag-dark-green-with-piping.jpg" 
+                                alt="Classic Bean Bags" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-4">
+                            <h3 class="text-white font-semibold text-xl">Classic Bean Bags</h3>
+                            <div class="w-10 h-1 bg-primary-400 mt-2 transition-all duration-300 group-hover:w-16"></div>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="group relative overflow-hidden rounded-lg shadow-md transition-all duration-300 hover:shadow-xl bg-white dark:bg-gray-700">
+                    <a href="{%url 'category' 'SOCCER' %}" class="block h-full">
+                        <div class="aspect-w-1 aspect-h-1">
+                            <img src="https://m.media-amazon.com/images/I/51cls0Y0pXL._AC_UF350,350_QL80_.jpg" 
+                                alt="Soccer Bean Bags" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-4">
+                            <h3 class="text-white font-semibold text-xl">Soccer Bean Bags</h3>
+                            <div class="w-10 h-1 bg-primary-400 mt-2 transition-all duration-300 group-hover:w-16"></div>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="group relative overflow-hidden rounded-lg shadow-md transition-all duration-300 hover:shadow-xl bg-white dark:bg-gray-700">
+                    <a href="{%url 'category' 'CHAIRS' %}" class="block h-full">
+                        <div class="aspect-w-1 aspect-h-1">
+                            <img src="https://m.media-amazon.com/images/I/71ZsVzTS11L._AC_UF894,1000_QL80_.jpg" 
+                                alt="Sofa Chair Bean Bags" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-4">
+                            <h3 class="text-white font-semibold text-xl">Sofa Chair Bean Bags</h3>
+                            <div class="w-10 h-1 bg-primary-400 mt-2 transition-all duration-300 group-hover:w-16"></div>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="group relative overflow-hidden rounded-lg shadow-md transition-all duration-300 hover:shadow-xl bg-white dark:bg-gray-700">
+                    <a href="{%url 'category' 'LUXURY' %}" class="block h-full">
+                        <div class="aspect-w-1 aspect-h-1">
+                            <img src="https://www.cielo.co.za/154823-large_default/big-boy-bean-bag-granite.jpg" 
+                                alt="Luxury Bean Bags" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-4">
+                            <h3 class="text-white font-semibold text-xl">Luxury Bean Bags</h3>
+                            <div class="w-10 h-1 bg-primary-400 mt-2 transition-all duration-300 group-hover:w-16"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+ 
+    <!--==========Carousel section================================ -->
+
+
+    <section class="w-full py-16 bg-gray-50 dark:bg-gray-900">
+        <div class="text-center mb-12">
+            <h2 class="text-2xl md:text-3xl font-bold text-primary-800 dark:text-white mb-4">
+                Give A Look To Our Products
+            </h2>
+            <p class="text-gray-600 dark:text-gray-400">
+                Explore our premium collection of comfortable and stylish bean bags.
+            </p>
+        </div>
+
+        <!-- Full-Width Swiper Carousel -->
+        <div class="swiper mySwiper w-full">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="https://plus.unsplash.com/premium_photo-1661582611532-f3aa2cb5b370?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Bean Bag 1" class="w-full h-96 object-cover">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://plus.unsplash.com/premium_photo-1682434180256-6d1f1bfda5a6?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Bean Bag 2" class="w-full h-96 object-cover">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://plus.unsplash.com/premium_photo-1661749800043-ba221ad7b8b7?q=80&w=2944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Bean Bag 3" class="w-full h-96 object-cover">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://images.unsplash.com/photo-1637782855823-5423b6afb07b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Bean Bag 4" class="w-full h-96 object-cover">
+                </div>
+            </div>
+    </section>
+
+
+    <!--=============================== Featured Collection Section======================-->
+
+
+    <section class="py-16 bg-gray-50 dark:bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between mb-10">
+                <h2 class="text-2xl md:text-3xl font-bold text-primary-800 dark:text-white">
+                    Featured Collection
+                </h2>
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-primary-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1z" clip-rule="evenodd" />
+                        <path d="M12 2a1 1 0 01.967.744L14.146 7.2 17.5 9.134a1 1 0 010 1.732l-3.354 1.935-1.18 4.455a1 1 0 01-1.933 0L9.854 12.8 6.5 10.866a1 1 0 010-1.732l3.354-1.935 1.18-4.455A1 1 0 0112 2z" />
+                    </svg>
+                    New Arrivals
+                </span>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {%for b in bags%}
+                <div class="group bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-xl">
+                    <a href="{%url 'product-detail' b.id%}" class="block h-full">
+                        <div class="relative overflow-hidden">
+                            {%if b.picture%}
+                            <img src="{{b.picture.url}}" alt="{{b.title}}" 
+                                 class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                            {%endif%}
+                            <div class="absolute top-2 right-2">
+                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-primary-200">
+                                    New
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4">
+                            <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300">
+                                {{b.title}}
+                            </h3>
+                            <div class="flex justify-between items-center">
+                                <p class="text-primary-600 dark:text-primary-400 font-semibold">
+                                    {% if b.variants.all %}
+                                        ₹{{ b.variants.first.price }}
+                                    {% else %}
+                                        Price Not Available
+                                    {% endif %}
+                                </p>
+                                <div class="text-gray-500 dark:text-gray-400">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {%endfor%}
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section with Minimal Design -->
+    <section class="py-16 bg-white dark:bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-2xl md:text-3xl font-bold text-primary-800 dark:text-white mb-4">
+                    Why Choose ComfyBean?
+                </h2>
+                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                    We're committed to providing the highest quality bean bags with exceptional comfort and style.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg transition-all duration-300 hover:shadow-md">
+                    <div class="flex items-center justify-center w-12 h-12 bg-primary-100 text-primary-600 dark:bg-primary-900 dark:text-primary-300 rounded-full mb-4 mx-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white text-center mb-2">
+                        Premium Materials
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-center">
+                        Crafted with high-quality fabrics and fillings that maintain their shape and comfort.
+                    </p>
+                </div>
+                
+                <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg transition-all duration-300 hover:shadow-md">
+                    <div class="flex items-center justify-center w-12 h-12 bg-primary-100 text-primary-600 dark:bg-primary-900 dark:text-primary-300 rounded-full mb-4 mx-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white text-center mb-2">
+                        Lifetime Warranty
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-center">
+                        We stand behind our quality with a lifetime warranty on all our bean bags.
+                    </p>
+                </div>
+                
+                <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg transition-all duration-300 hover:shadow-md">
+                    <div class="flex items-center justify-center w-12 h-12 bg-primary-100 text-primary-600 dark:bg-primary-900 dark:text-primary-300 rounded-full mb-4 mx-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white text-center mb-2">
+                        Free Shipping
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-center">
+                        Enjoy free shipping on all orders over $50 and easy returns within 30 days.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial Section with Clean Design -->
+    <section class="py-16 bg-gray-50 dark:bg-gray-900">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-2xl md:text-3xl font-bold text-primary-800 dark:text-white mb-4">
+                    What Our Customers Say
+                </h2>
+                <p class="text-gray-600 dark:text-gray-400">
+                    Real stories from real customers who love our bean bags.
+                </p>
+            </div>
+            
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 md:p-8 relative">
+                <div class="absolute top-0 left-0 transform -translate-x-3 -translate-y-3">
+                    <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" class="fill-primary-200 dark:fill-primary-900">
+                        <path d="M10.8 20.2C12.1333 21.1333 13 22.4 13.4 24C13.8 25.6 13.6667 27.2 13 28.8C12.3333 30.1333 11.4 31.1333 10.2 31.8C9 32.4667 7.66667 32.8 6.2 32.8C4.6 32.8 3.2 32.2667 2 31.2C0.8 30.1333 0.2 28.8 0.2 27.2C0.2 26.2667 0.4 25.4 0.8 24.6C1.2 23.8 1.86667 22.9333 2.8 22C3.73333 21.0667 4.93333 20.0667 6.4 19C7.86667 17.9333 9.66667 16.7333 11.8 15.4L14 19C12.2667 20.0667 11.1333 20.8667 10.6 21.4C10.0667 21.9333 9.8 22.4 9.8 22.8C9.8 23.2 9.86667 23.5333 10 23.8C10.1333 24.0667 10.3333 24.2 10.6 24.2C11 24.0667 11.2667 23.8667 11.4 23.6C11.5333 23.3333 11.6667 23 11.8 22.6C11.9333 22.2 12.0667 21.7333 12.2 21.2C12.3333 20.6667 12.5333 20.2667 12.8 20C10.5333 19.3333 8.86667 18.4 7.8 17.2C6.73333 16 6.2 14.5333 6.2 12.8C6.2 11.0667 6.86667 9.6 8.2 8.4C9.53333 7.2 11.2 6.6 13.2 6.6C15.2 6.6 16.8667 7.26667 18.2 8.6C19.5333 9.93333 20.2 11.5333 20.2 13.4C20.2 15.2667 19.4667 17.1333 18 19C16.5333 20.8667 14.1333 22.1333 10.8 22.8V20.2ZM30.8 20.2C32.1333 21.1333 33 22.4 33.4 24C33.8 25.6 33.6667 27.2 33 28.8C32.3333 30.1333 31.4 31.1333 30.2 31.8C29 32.4667 27.6667 32.8 26.2 32.8C24.6 32.8 23.2 32.2667 22 31.2C20.8 30.1333 20.2 28.8 20.2 27.2C20.2 26.2667 20.4 25.4 20.8 24.6C21.2 23.8 21.8667 22.9333 22.8 22C23.7333 21.0667 24.9333 20.0667 26.4 19C27.8667 17.9333 29.6667 16.7333 31.8 15.4L34 19C32.2667 20.0667 31.1333 20.8667 30.6 21.4C30.0667 21.9333 29.8 22.4 29.8 22.8C29.8 23.2 29.8667 23.5333 30 23.8C30.1333 24.0667 30.3333 24.2 30.6 24.2C31 24.0667 31.2667 23.8667 31.4 23.6C31.5333 23.3333 31.6667 23 31.8 22.6C31.9333 22.2 32.0667 21.7333 32.2 21.2C32.3333 20.6667 32.5333 20.2667 32.8 20C30.5333 19.3333 28.8667 18.4 27.8 17.2C26.7333 16 26.2 14.5333 26.2 12.8C26.2 11.0667 26.8667 9.6 28.2 8.4C29.5333 7.2 31.2 6.6 33.2 6.6C35.2 6.6 36.8667 7.26667 38.2 8.6C39.5333 9.93333 40.2 11.5333 40.2 13.4C40.2 15.2667 39.4667 17.1333 38 19C36.5333 20.8667 34.1333 22.1333 30.8 22.8V20.2Z"/>
+                    </svg>
+                </div>
+                <div class="text-center">
+                    <p class="text-lg text-gray-700 dark:text-gray-300 mb-6 italic">
+                        I've owned many bean bags over the years, but nothing compares to the quality and comfort of ComfyBean. It's become the most fought-over seat in our living room!
+                    </p>
+                    <div class="flex items-center justify-center">
+                        <img src="https://photos.talktotucker.com/original/agents/1647373347708.png" alt="Sarah Johnson" class="w-12 h-12 rounded-full mr-4 object-cover">
+                        <div class="text-left">
+                            <p class="font-medium text-gray-900 dark:text-white">Sarah Johnson</p>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Verified Customer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+        
+        <div class="pt-8 text-center">
+            <p class="text-sm text-gray-500 dark:text-gray-400">
+                &copy; 2025 ComfyBean. All rights reserved.
+            </p>
+            <div class="mt-2">
+                <button onclick="toggleDarkMode()" class="inline-flex items-center px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                    Toggle Dark Mode
+                </button>
+            </div>
+        </div>
+        <!-- SwiperJS Script -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            loop: true,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+        });
+    </script>
+
+</body>
+{%endblock main_block%}

@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block main_block %}
+<script>
+    function toggleDarkMode() {
+        document.documentElement.classList.toggle('dark');
+    }
+
+    tailwind.config = {
+        darkMode: 'class',
+        theme: {
+            extend: {
+                colors: {
+                    primary: {
+                        50: '#f0fdfa',
+                        100: '#ccfbf1',
+                        200: '#99f6e4',
+                        300: '#5eead4',
+                        400: '#2dd4bf',
+                        500: '#14b8a6',
+                        600: '#0d9488',
+                        700: '#0f766e',
+                        800: '#115e59',
+                        900: '#134e4a'
+                    }
+                },
+                animation: {
+                    'bounce-slow': 'bounce 2s infinite',
+                }
+            }
+        }
+    }
+</script>
+<style>
+    .category-overlay {
+        transition: all 0.3s ease;
+    }
+    .category-overlay:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+</style>
+<center>
+
+
+    <!-- Bean Bags Grid -->
+<div class="bg-white dark:bg-gray-900 py-12">
+    <div><h2 class="text-3xl font-bold text-primary-800 dark:text-white mb-8">{{ category }} Bean Bags</h2></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {% for beanbag in beanbags %}
+            <a href="{% url 'product-detail' beanbag.id %}" class="bg-white dark:bg-gray-700 rounded-2xl shadow-lg overflow-hidden transform transition-all hover:-translate-y-2 hover:shadow-2xl p-4">
+                {% if beanbag.picture %}
+                    <img src="{{ beanbag.picture.url }}" alt="{{ beanbag.title }}" class="w-full h-64 object-cover rounded-t-2xl">
+                {% else %}
+                    <div class="w-full h-64 bg-gray-300 flex items-center justify-center text-gray-600">
+                        No Image Available
+                    </div>
+                {% endif %}
+
+                <div class="p-4">
+                    <h3 class="text-xl font-semibold text-primary-800 dark:text-white">{{ beanbag.title }}</h3>
+                    <div class="flex justify-between items-center mt-2">
+                        {% with beanbag.variants.first as variant %}
+                            {% if variant %}
+                                <p class="text-primary-600 font-bold">{{ variant.price }} /-</p>
+                            {% else %}
+                                <p class="text-gray-500">Price not available</p>
+                            {% endif %}
+                        {% endwith %}
+                        <!-- <p class="text-primary-600 font-bold">{{ beanbag.price }} /- </p> -->
+                        <span class="bg-primary-100 text-primary-800 px-2 py-1 rounded-full text-xs">New</span>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+</center>
+{% endblock %}
+
