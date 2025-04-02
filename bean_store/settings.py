@@ -201,3 +201,4 @@ EMAIL_HOST_PASSWORD =config('EMAIL_HOST_PASSWORD')
 
 LOGIN_URL = '/login/'
 
+ALLOWED_HOSTS = ['bean_app.onrender.com', '127.0.0.1', 'localhost']
