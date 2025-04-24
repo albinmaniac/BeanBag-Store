@@ -197,4 +197,9 @@ EMAIL_HOST_PASSWORD =config('EMAIL_HOST_PASSWORD')
 
 LOGIN_URL = '/login/'
 
-ALLOWED_HOSTS = ['bean_app.onrender.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = [
+    'beanbag-store.onrender.com',
+    'bean_app.onrender.com',  # if you still need this
+    '127.0.0.1',
+    'localhost',
+]
