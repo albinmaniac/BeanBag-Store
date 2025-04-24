@@ -99,12 +99,13 @@ default_db = {
     'NAME': BASE_DIR / 'db.sqlite3',
 }
 
+# Use DATABASE_URL if available, otherwise fallback to default_db (SQLite)
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL') or "",
+        default=os.getenv('DATABASE_URL', None),  # default to None, not an empty string
         conn_max_age=600,
         ssl_require=True
-    ) or default_db
+    ) or default_db  # fallback to SQLite if no DATABASE_URL is provided
 }
 
 
