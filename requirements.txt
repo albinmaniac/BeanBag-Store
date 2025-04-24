@@ -47,3 +47,4 @@ urllib3==2.3.0
 whitenoise==6.9.0
 yarl==1.18.3
 zope.interface==7.2
+dj_database_url==2.3.0
